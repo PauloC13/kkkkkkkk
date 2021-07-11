@@ -1,0 +1,47 @@
+import { setStatusBarStyle } from 'expo-status-bar';
+import React from 'react';
+import { View, Text } from 'react-native';
+import { theme } from '../../global/styles/theme';
+import { Avatar } from '../Avatar';
+import { styles } from './styles';
+
+
+
+export type MamberProps = {
+    id: string,
+    username: string,
+    avatar_url: string,
+    status: string
+}
+
+type Props = {
+    data: MamberProps;
+}
+
+export function Member({data}: Props){
+    const {on, primary} = theme.colors;
+    const isOnline = data.status === 'online';
+    return(
+        <View style={styles.container}>
+            <Avatar urlImage={data.avatar_url}/>
+
+            <View>
+                <Text style={styles.title}>
+                    {data.username}
+                </Text>
+                <View style={styles.status}>
+                    <View style={[
+                        styles.bulletStatus,
+                        {
+                            backgroundColor: isOnline ? on : primary
+                        }
+                    ]}></View>
+                    <Text style={styles.nameStatus}>
+                        { isOnline ? 'Disponível' : 'Ocupado'}
+                    </Text>
+                </View>
+            </View>
+        </View>
+   
+    );
+}
